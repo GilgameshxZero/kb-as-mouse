@@ -1,0 +1,10 @@
+100 102 104 101 
+96 107 110
+103 105
+0.008 0.0050 0.0010 0.0005 20
+
+left right up down
+leftclick rightclick middleclick
+wheelup wheeldown
+speed friction minvel maxvel minthresh
+fps
