@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Rain Standard Library">
+      <UniqueIdentifier>{cd904766-d5d9-416a-9a5a-72cc0dab1177}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{1d0e711e-60e3-40b4-88d6-82e95373122b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VersionBuildInc.h">
@@ -24,19 +30,34 @@
     <ClInclude Include="VersionID.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
-    <ClInclude Include="StateProcess.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseEvent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LLHook.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MKBState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WinMain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Start.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rain Standard Library\RainError.h">
+      <Filter>Rain Standard Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Rain Standard Library\RainUtility.h">
+      <Filter>Rain Standard Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Rain Standard Library\RainUtilityFile.h">
+      <Filter>Rain Standard Library</Filter>
+    </ClInclude>
+    <ClInclude Include="Rain Standard Library\RainWindowsLAM.h">
+      <Filter>Rain Standard Library</Filter>
+    </ClInclude>
+    <ClInclude Include="HookEventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -46,24 +67,60 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="settings.txt" />
-    <Text Include="readme.txt" />
+    <Text Include="changelog.txt">
+      <Filter>Other</Filter>
+    </Text>
+    <Text Include="readme.txt">
+      <Filter>Other</Filter>
+    </Text>
+    <Text Include="config.txt">
+      <Filter>Other</Filter>
+    </Text>
+    <Text Include="memory_leaks.txt">
+      <Filter>Other</Filter>
+    </Text>
+    <Text Include="keyasmouse_errors.txt">
+      <Filter>Other</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="StateProcess.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WinMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseEvent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LLHook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MKBState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Start.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Rain Standard Library\RainError.cpp">
+      <Filter>Rain Standard Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Rain Standard Library\RainUtility.cpp">
+      <Filter>Rain Standard Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Rain Standard Library\RainUtilityFile.cpp">
+      <Filter>Rain Standard Library</Filter>
+    </ClCompile>
+    <ClCompile Include="Rain Standard Library\RainWindowsLAM.cpp">
+      <Filter>Rain Standard Library</Filter>
+    </ClCompile>
+    <ClCompile Include="HookEventManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitattributes">
+      <Filter>Other</Filter>
+    </None>
+    <None Include="..\.gitignore">
+      <Filter>Other</Filter>
+    </None>
   </ItemGroup>
 </Project>

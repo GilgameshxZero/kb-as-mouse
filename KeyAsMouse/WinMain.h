@@ -1,11 +1,8 @@
 #pragma once
-
-#include "LLHook.h"
-#include "MKBState.h"
-#include "StateProcess.h"
-#include "MouseEvent.h"
-#include <fstream>
+#include "Start.h"
 #include <Windows.h>
 
-
-int CALLBACK WinMain (_In_ HINSTANCE hInstance, _In_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow);
+int CALLBACK WinMain (HINSTANCE hInstance, 
+	HINSTANCE hPrevInstance, 
+	LPSTR lpCmdLine, 
+	int nCmdShow);

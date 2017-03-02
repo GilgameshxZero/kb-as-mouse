@@ -1,40 +1,14 @@
 #pragma once
-
+#include <bitset>
 #include <vector>
 
-namespace KeyAsMouse
-{
-	//keep track of the state of relevant keys on the keyboard and mouse position
-	namespace MKBState
-	{
-		//update state
-		void UpdKeyDown (int vkcode);
-		void UpdKeyUp (int vkcode);
-
-		void UpdMousePos (double x, double y);
-
-		//retreive state
-		bool GetKey (int vkcode);
-
-		//returns values between -1 and 1 (usually -1, 0, or 1)
-		int GetHoroAxis ();
-		int GetVertAxis ();
-		int GetScrollAxis ();
-
-		//test if key should be intercepted by hook and not passed down the chain
-		bool ShouldIntercept (int vkcode);
-
-		//keystate
-		extern std::vector<bool> keydown;
-
-		//mousestate
-		extern double mousex, mousey;
-
-		//keys from settings
-		extern int left, down, right, up, lclick, rclick, mclick, wheeldown, wheelup;
-
-		//function pointers to call when button clicked
-		typedef void (*NotifyFunc)(void);
-		extern NotifyFunc lbuttonup, lbuttondown, rbuttonup, rbuttondown, mbuttonup, mbuttondown;
+namespace KeyAsMouse {
+	//Mouse/Keyboard State
+	namespace MKBState {
+		extern std::pair<double, double> exact_pos, //position of mouse in real numbers, to be converted into integers later
+			mouse_vel; //velocity of mouse, in pixels per second
+		extern std::bitset<256> vkkey_down;
+		extern double wheel_pos, //real number; accumulated wheel units; whenever this exceeds 1, the timer should remove the whole number portion and send that as a message
+			wheel_vel; //velocity of mouse wheel, in units per second
 	};
 }

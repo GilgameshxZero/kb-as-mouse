@@ -72,21 +72,25 @@
     <OutDir>$(ProjectDir)</OutDir>
     <IntDir>C:\Main\Active\Documents\Programming\VisualStudio\Intermediates\$(SolutionName)\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
     <TargetName>$(SolutionName) - $(ProjectName) ($(Configuration) $(PlatformTarget))</TargetName>
+    <IncludePath>C:\Main\Active\Documents\Programming\Rain\Developing\KeyAsMouse\KeyAsMouse\Rain Standard Library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)</OutDir>
     <IntDir>C:\Main\Active\Documents\Programming\VisualStudio\Intermediates\$(SolutionName)\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
     <TargetName>$(SolutionName) - $(ProjectName) ($(Configuration) $(PlatformTarget))</TargetName>
+    <IncludePath>C:\Main\Active\Documents\Programming\Rain\Developing\KeyAsMouse\KeyAsMouse\Rain Standard Library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)</OutDir>
     <IntDir>C:\Main\Active\Documents\Programming\VisualStudio\Intermediates\$(SolutionName)\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
     <TargetName>$(SolutionName) - $(ProjectName) ($(Configuration) $(PlatformTarget))</TargetName>
+    <IncludePath>C:\Main\Active\Documents\Programming\Rain\Developing\KeyAsMouse\KeyAsMouse\Rain Standard Library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(ProjectDir)</OutDir>
     <IntDir>C:\Main\Active\Documents\Programming\VisualStudio\Intermediates\$(SolutionName)\$(ProjectName)\$(Configuration)\$(PlatformTarget)\</IntDir>
     <TargetName>$(SolutionName) - $(ProjectName) ($(Configuration) $(PlatformTarget))</TargetName>
+    <IncludePath>C:\Main\Active\Documents\Programming\Rain\Developing\KeyAsMouse\KeyAsMouse\Rain Standard Library;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,11 +163,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="LLHook.h" />
+    <ClInclude Include="HookEventManager.h" />
     <ClInclude Include="MKBState.h" />
-    <ClInclude Include="MouseEvent.h" />
+    <ClInclude Include="Rain Standard Library\RainError.h" />
+    <ClInclude Include="Rain Standard Library\RainUtility.h" />
+    <ClInclude Include="Rain Standard Library\RainUtilityFile.h" />
+    <ClInclude Include="Rain Standard Library\RainWindowsLAM.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="StateProcess.h" />
+    <ClInclude Include="Settings.h" />
+    <ClInclude Include="Start.h" />
+    <ClInclude Include="TimerManager.h" />
     <ClInclude Include="VersionBuildInc.h" />
     <ClInclude Include="VersionID.h" />
     <ClInclude Include="WinMain.h" />
@@ -172,15 +181,62 @@
     <ResourceCompile Include="resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="readme.txt" />
-    <Text Include="settings.txt" />
+    <Text Include="changelog.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Text>
+    <Text Include="keyasmouse_errors.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Text>
+    <Text Include="memory_leaks.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Text>
+    <Text Include="readme.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Text>
+    <Text Include="config.txt">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LLHook.cpp" />
+    <ClCompile Include="HookEventManager.cpp" />
     <ClCompile Include="MKBState.cpp" />
-    <ClCompile Include="MouseEvent.cpp" />
-    <ClCompile Include="StateProcess.cpp" />
+    <ClCompile Include="Rain Standard Library\RainError.cpp" />
+    <ClCompile Include="Rain Standard Library\RainUtility.cpp" />
+    <ClCompile Include="Rain Standard Library\RainUtilityFile.cpp" />
+    <ClCompile Include="Rain Standard Library\RainWindowsLAM.cpp" />
+    <ClCompile Include="Settings.cpp" />
+    <ClCompile Include="Start.cpp" />
+    <ClCompile Include="TimerManager.cpp" />
     <ClCompile Include="WinMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.gitattributes">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\.gitignore">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,0 +1,8 @@
+1.0.0
+2.0.0
+	code refactoring
+	reimplemented mouse and scroll wheel physics to be more flexible and natural
+	reformatted config file and added flexibility to format interpretation
+	reduced CPU usage by shutting off the timer while velocity of mouse or scroll wheel is low
+	removed timer bug
+	added program icon
