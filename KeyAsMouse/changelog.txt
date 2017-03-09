@@ -6,3 +6,9 @@
 	reduced CPU usage by shutting off the timer while velocity of mouse or scroll wheel is low
 	removed timer bug
 	added program icon
+2.1.0
+	added DiffMode, a different way mouse movement is processed, typically useful for applications where the mouse is fixed in a predetermined location, such as most FPSs or Minecraft
+	added SlowMode, such that when a key is being held all scroll and mouse move accelerations are reduced by half
+	added pause capability, which toggles the program functions, instead of turning it off directly like TerminateKey
+	added WheelUpSingle/WheelDownSingle, two keys that send exactly one tick of the scroll wheel when pressed/held, unlike the WheelUp/WheelDown keys, which have physics applied to the scroll wheel
+	cleaned up mouse messages to be adhere to standards more

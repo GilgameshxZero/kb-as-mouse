@@ -11,9 +11,12 @@ namespace KeyAsMouse {
 			scroll_acc,
 			min_scroll_vel_thresh,
 			scroll_resist_power;
-		extern int left, down, right, up, lclick, rclick, mclick, wheeldown, wheelup,
+		extern int left, down, right, up, lclick, rclick, mclick, wheeldown, wheelup, wheeldownsingle, wheelupsingle,
 			fps, //frames per second; the desired number of times that calculations should be applied per second; higher fps result in smoother actions
+			slow_mode, //when held, scale user inputted acceleration down to 50% effectivity
+			pause_key, //toggles program activity
 			terminate_key; //when pressed, this should end the program
+		extern bool diff_mode; //if true, the exact position of the mouse is not stored; instead, updates to the mouse are sent every time the mouse has traveled > 1 pixel in any direction; this is similar to how scroll is processed; the mouse will retain momentum even when hitting edges of screen
 		extern std::set<int> crit_keys; //set containing the left, down, etc. keys
 	}
 }

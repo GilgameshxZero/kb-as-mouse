@@ -1,4 +1,6 @@
-Keys specified in the configuration file (config.txt) are to be VK codes. You can find a list of VK codes here: https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx. The scroll wheel mechanics are exactly the same as the mouse movement mechanics on each axis.
+Keys specified in the configuration file (config.txt) are to be VK codes. You can find a list of VK codes here: https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx. The scroll wheel mechanics are exactly the same as the mouse movement mechanics on each axis. Negative numbers, such as -1, will disable a key (however, it is ill-advised to input a negative number for non-key settings).
+
+All 24 Settings must be included in the configuratio nfile or the program will fail. Please see the keyasmouse_errors.txt file for additional information for other failures.
 
 Acceleration denotes, in pixels/s^2, the velocity that will be gained by the object per second the related key is held down.
 Resistance denotes the coefficient which determines the final acceleration of friction against the current velocity direction of the object. This coefficient is scaled by the current velocity.

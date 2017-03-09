@@ -8,7 +8,7 @@ namespace KeyAsMouse {
 			HINSTANCE hPrevInstance,
 			LPSTR lpCmdLine,
 			int nCmdShow) {
-			const int NUM_SETTINGS = 19;
+			const int NUM_SETTINGS = 24;
 
 			std::pair<std::streambuf *, std::ofstream *> cerr_filedata;
 			HANDLE mem_leak;
@@ -38,6 +38,7 @@ namespace KeyAsMouse {
 				if (!config.good ())
 					break;
 
+				//remove whitespace from setting name
 				setting.erase (std::remove_if (setting.begin (), setting.end (), ::isspace), setting.end ());
 
 				if (setting == "LeftKey")
@@ -58,6 +59,10 @@ namespace KeyAsMouse {
 					config >> Settings::wheelup;
 				else if (setting == "WheelDown")
 					config >> Settings::wheeldown;
+				else if (setting == "WheelUpSingle")
+					config >> Settings::wheelupsingle;
+				else if (setting == "WheelDownSingle")
+					config >> Settings::wheeldownsingle;
 				else if (setting == "FramesPerSecond")
 					config >> Settings::fps;
 				else if (setting == "Acceleration")
@@ -76,8 +81,14 @@ namespace KeyAsMouse {
 					config >> Settings::min_vel_thresh;
 				else if (setting == "MinScrollVelThresh")
 					config >> Settings::min_scroll_vel_thresh;
+				else if (setting == "SlowMode")
+					config >> Settings::slow_mode;
+				else if (setting == "PauseKey")
+					config >> Settings::pause_key;
 				else if (setting == "TerminateKey")
 					config >> Settings::terminate_key;
+				else if (setting == "DiffMode")
+					config >> Settings::diff_mode;
 				else
 					return Rain::ReportError (-2, "Configuration file contained unrecognised setting.");
 			}
@@ -97,12 +108,17 @@ namespace KeyAsMouse {
 			Settings::crit_keys.insert (Settings::mclick);
 			Settings::crit_keys.insert (Settings::wheelup);
 			Settings::crit_keys.insert (Settings::wheeldown);
+			Settings::crit_keys.insert (Settings::wheelupsingle);
+			Settings::crit_keys.insert (Settings::wheeldownsingle);
+			Settings::crit_keys.insert (Settings::slow_mode);
+			Settings::crit_keys.insert (Settings::pause_key);
 
 			GetCursorPos (&mouse_pos);
 			MKBState::exact_pos = std::make_pair (static_cast<double>(mouse_pos.x), static_cast<double>(mouse_pos.y));
-			MKBState::mouse_vel = std::make_pair (0, 0);
+			MKBState::mouse_vel = MKBState::mouse_pos_diff = std::make_pair (0, 0);
 			MKBState::wheel_pos = 0;
 			MKBState::wheel_vel = 0;
+			MKBState::paused = false;
 
 			GetWindowRect (GetDesktopWindow (), &wrect);
 			screen_width = wrect.right - wrect.left;
