@@ -32,7 +32,7 @@ namespace KeyAsMouse {
 			//slow acceleartion for mouse and wheel if slow_mode key is held
 			static double acc_scale;
 			if (MKBState::vkkey_down[Settings::slow_mode])
-				acc_scale = 0.5;
+				acc_scale = Settings::slow_ratio;
 			else
 				acc_scale = 1;
 

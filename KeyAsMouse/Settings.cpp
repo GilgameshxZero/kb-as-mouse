@@ -9,7 +9,8 @@ namespace KeyAsMouse {
 			scroll_resist, //similar concept, to the scrollwheel
 			scroll_acc,
 			min_scroll_vel_thresh,
-			scroll_resist_power;
+			scroll_resist_power,
+			slow_ratio;
 		int left, down, right, up, lclick, rclick, mclick, wheeldown, wheelup, wheeldownsingle, wheelupsingle,
 			fps, //frames per second; the desired number of times that calculations should be applied per second; higher fps result in smoother actions
 			slow_mode, //when held, scale user inputted acceleration down to 50% effectivity

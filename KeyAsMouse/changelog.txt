@@ -12,3 +12,5 @@
 	added pause capability, which toggles the program functions, instead of turning it off directly like TerminateKey
 	added WheelUpSingle/WheelDownSingle, two keys that send exactly one tick of the scroll wheel when pressed/held, unlike the WheelUp/WheelDown keys, which have physics applied to the scroll wheel
 	cleaned up mouse messages to be adhere to standards more
+2.1.1
+	added setting for SlowMode speed reduction (or increase)

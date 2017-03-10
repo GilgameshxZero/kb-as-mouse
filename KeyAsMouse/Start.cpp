@@ -8,7 +8,7 @@ namespace KeyAsMouse {
 			HINSTANCE hPrevInstance,
 			LPSTR lpCmdLine,
 			int nCmdShow) {
-			const int NUM_SETTINGS = 24;
+			const int NUM_SETTINGS = 25;
 
 			std::pair<std::streambuf *, std::ofstream *> cerr_filedata;
 			HANDLE mem_leak;
@@ -81,6 +81,8 @@ namespace KeyAsMouse {
 					config >> Settings::min_vel_thresh;
 				else if (setting == "MinScrollVelThresh")
 					config >> Settings::min_scroll_vel_thresh;
+				else if (setting == "SlowRatio")
+					config >> Settings::slow_ratio;
 				else if (setting == "SlowMode")
 					config >> Settings::slow_mode;
 				else if (setting == "PauseKey")
