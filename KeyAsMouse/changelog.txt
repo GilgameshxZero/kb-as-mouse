@@ -14,3 +14,6 @@
 	cleaned up mouse messages to be adhere to standards more
 2.1.1
 	added setting for SlowMode speed reduction (or increase)
+2.1.2
+	fixed bug where holding any of the click keys or pause would cause corresponding down messages to be sent multiple times (single wheel keys still work as before)
+	fixed bug where the termination key would not have its effects blocked by the program upon release

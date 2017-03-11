@@ -56,6 +56,13 @@ namespace KeyAsMouse {
 		}
 
 		bool KeyUp (int vkCode) {
+			MKBState::vkkey_down[vkCode] = false;
+
+			if (vkCode == Settings::terminate_key) {
+				PostQuitMessage (0);
+				return true;
+			}
+
 			if (MKBState::paused)
 				return false;
 
@@ -74,31 +81,34 @@ namespace KeyAsMouse {
 					SendInput (1, &iev, sizeof (INPUT));
 				} else if (vkCode == Settings::pause_key ||
 					vkCode == Settings::wheeldownsingle ||
-					vkCode == Settings::wheelupsingle) {
-					//do nothing
-				} else
-					MKBState::vkkey_down[vkCode] = false;
+					vkCode == Settings::wheelupsingle || 
+					vkCode == Settings::terminate_key)
+					; //do nothing
+				else
+					; //do nothing
 
 				return true;
 			}
 			return false;
 		}
 		bool KeyDown (int vkCode) {
-			if (vkCode == Settings::terminate_key) {
-				PostQuitMessage (0);
-				return true;
-			}
+			//this stores the keydown status prior to alteration; some keys we do not want to process multiple keydown messages when held (such as pause and the clicks
+			static bool prev_key_down;
 
-			if (vkCode == Settings::pause_key)
+			prev_key_down = MKBState::vkkey_down[vkCode];
+			MKBState::vkkey_down[vkCode] = true;
+
+			if (!prev_key_down && vkCode == Settings::pause_key)
 				MKBState::paused = !MKBState::paused;
 
 			if (MKBState::paused)
 				return false;
 
 			if (Settings::crit_keys.find (vkCode) != Settings::crit_keys.end ()) {
-				if (vkCode == Settings::lclick || 
-					vkCode == Settings::rclick || 
-					vkCode == Settings::mclick || 
+				if ((!prev_key_down && 
+						(vkCode == Settings::lclick ||
+						vkCode == Settings::rclick || 
+						vkCode == Settings::mclick)) || 
 					vkCode == Settings::wheeldownsingle || 
 					vkCode == Settings::wheelupsingle) {
 					static INPUT iev;
@@ -117,12 +127,11 @@ namespace KeyAsMouse {
 						iev.mi.mouseData = WHEEL_DELTA;
 					}
 					SendInput (1, &iev, sizeof (INPUT));
-				} else if (vkCode == Settings::pause_key) {
-					//do nothing, we already processed this earlier in the function
-				} else {
-					MKBState::vkkey_down[vkCode] = true;
-
-					//if timer has stopped (velocity is null), then restart it
+				} else if (vkCode == Settings::pause_key || 
+					vkCode == Settings::terminate_key)
+					; //do nothing
+				else {
+					//if timer is stopped (velocity is null), then restart it
 					if (!TimerManager::timer_running) {
 						TimerManager::timer_running = true;
 						SetTimer (NULL, 0, 0, TimerManager::TimerProc);
@@ -131,6 +140,7 @@ namespace KeyAsMouse {
 
 				return true;
 			}
+
 			return false;
 		}
 		void MouseMove (POINT mouse_pos) {
