@@ -81,7 +81,9 @@ namespace KeyAsMouse {
 					SendInput (1, &iev, sizeof (INPUT));
 				} else if (vkCode == Settings::pause_key ||
 					vkCode == Settings::wheeldownsingle ||
-					vkCode == Settings::wheelupsingle || 
+					vkCode == Settings::wheelupsingle ||
+					vkCode == Settings::wheelleft ||
+					vkCode == Settings::wheelright ||
 					vkCode == Settings::terminate_key)
 					; //do nothing
 				else
@@ -110,7 +112,9 @@ namespace KeyAsMouse {
 						vkCode == Settings::rclick || 
 						vkCode == Settings::mclick)) || 
 					vkCode == Settings::wheeldownsingle || 
-					vkCode == Settings::wheelupsingle) {
+					vkCode == Settings::wheelupsingle || 
+					vkCode == Settings::wheelleft || 
+					vkCode == Settings::wheelright) {
 					static INPUT iev;
 					iev = PrepMouseEvent ();
 					if (vkCode == Settings::lclick)
@@ -119,12 +123,23 @@ namespace KeyAsMouse {
 						iev.mi.dwFlags = MOUSEEVENTF_RIGHTDOWN;
 					else if (vkCode == Settings::mclick)
 						iev.mi.dwFlags = MOUSEEVENTF_MIDDLEDOWN;
-					else if (vkCode == Settings::wheeldownsingle) {
-						iev.mi.dwFlags = MOUSEEVENTF_WHEEL;
-						iev.mi.mouseData = -WHEEL_DELTA;
-					} else if (vkCode == Settings::wheelupsingle) {
-						iev.mi.dwFlags = MOUSEEVENTF_WHEEL;
-						iev.mi.mouseData = WHEEL_DELTA;
+					else if (vkCode == Settings::wheeldownsingle ||
+						vkCode == Settings::wheelupsingle ||
+						vkCode == Settings::wheelleft ||
+						vkCode == Settings::wheelright) {
+						if (vkCode == Settings::wheeldownsingle || 
+							vkCode == Settings::wheelupsingle)
+							iev.mi.dwFlags = MOUSEEVENTF_WHEEL;
+						else
+							iev.mi.dwFlags = MOUSEEVENTF_HWHEEL;
+						if (vkCode == Settings::wheeldownsingle)
+							iev.mi.mouseData = -WHEEL_DELTA;
+						else if (vkCode == Settings::wheelupsingle)
+							iev.mi.mouseData = WHEEL_DELTA;
+						else if (vkCode == Settings::wheelleft)
+							iev.mi.mouseData = -WHEEL_DELTA;
+						else if (vkCode == Settings::wheelright)
+							iev.mi.mouseData = WHEEL_DELTA;
 					}
 					SendInput (1, &iev, sizeof (INPUT));
 				} else if (vkCode == Settings::pause_key || 

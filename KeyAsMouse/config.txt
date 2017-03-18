@@ -7,8 +7,13 @@ RightClick: 110
 MiddleClick: 98
 WheelUp: 105
 WheelDown: 103
-WheelUpSingle: 97
-WheelDownSingle: 99
+WheelUpSingle: -1
+WheelDownSingle: -1
+WheelLeft: 97
+WheelRight: 99
+SlowMode: 107
+PauseKey: 19
+TerminateKey: 93
 FramesPerSecond: 90
 Acceleration: 120
 Resistance: 85
@@ -18,8 +23,5 @@ ScrollResist: 25
 ScrollResistPower: 1.2
 MinVelocityThreshold: 0.005
 MinScrollVelThresh: 0.005
-SlowMode: 107
 SlowRatio: 0.30
-PauseKey: 19
-TerminateKey: 93
 DiffMode: 1

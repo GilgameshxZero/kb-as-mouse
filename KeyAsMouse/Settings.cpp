@@ -11,7 +11,7 @@ namespace KeyAsMouse {
 			min_scroll_vel_thresh,
 			scroll_resist_power,
 			slow_ratio;
-		int left, down, right, up, lclick, rclick, mclick, wheeldown, wheelup, wheeldownsingle, wheelupsingle,
+		int left, down, right, up, lclick, rclick, mclick, wheeldown, wheelup, wheeldownsingle, wheelupsingle, wheelleft, wheelright, 
 			fps, //frames per second; the desired number of times that calculations should be applied per second; higher fps result in smoother actions
 			slow_mode, //when held, scale user inputted acceleration down to 50% effectivity
 			pause_key, //toggles program activity

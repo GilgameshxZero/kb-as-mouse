@@ -17,3 +17,5 @@
 2.1.2
 	fixed bug where holding any of the click keys or pause would cause corresponding down messages to be sent multiple times (single wheel keys still work as before)
 	fixed bug where the termination key would not have its effects blocked by the program upon release
+2.2.0
+	added options to move the mouse wheel horizontally, without physics implementation

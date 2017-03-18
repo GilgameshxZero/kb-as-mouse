@@ -8,7 +8,7 @@ namespace KeyAsMouse {
 			HINSTANCE hPrevInstance,
 			LPSTR lpCmdLine,
 			int nCmdShow) {
-			const int NUM_SETTINGS = 25;
+			const int NUM_SETTINGS = 27;
 
 			std::pair<std::streambuf *, std::ofstream *> cerr_filedata;
 			HANDLE mem_leak;
@@ -63,6 +63,16 @@ namespace KeyAsMouse {
 					config >> Settings::wheelupsingle;
 				else if (setting == "WheelDownSingle")
 					config >> Settings::wheeldownsingle;
+				else if (setting == "WheelLeft")
+					config >> Settings::wheelleft;
+				else if (setting == "WheelRight")
+					config >> Settings::wheelright;
+				else if (setting == "SlowMode")
+					config >> Settings::slow_mode;
+				else if (setting == "PauseKey")
+					config >> Settings::pause_key;
+				else if (setting == "TerminateKey")
+					config >> Settings::terminate_key;
 				else if (setting == "FramesPerSecond")
 					config >> Settings::fps;
 				else if (setting == "Acceleration")
@@ -83,12 +93,6 @@ namespace KeyAsMouse {
 					config >> Settings::min_scroll_vel_thresh;
 				else if (setting == "SlowRatio")
 					config >> Settings::slow_ratio;
-				else if (setting == "SlowMode")
-					config >> Settings::slow_mode;
-				else if (setting == "PauseKey")
-					config >> Settings::pause_key;
-				else if (setting == "TerminateKey")
-					config >> Settings::terminate_key;
 				else if (setting == "DiffMode")
 					config >> Settings::diff_mode;
 				else
@@ -112,6 +116,8 @@ namespace KeyAsMouse {
 			Settings::crit_keys.insert (Settings::wheeldown);
 			Settings::crit_keys.insert (Settings::wheelupsingle);
 			Settings::crit_keys.insert (Settings::wheeldownsingle);
+			Settings::crit_keys.insert (Settings::wheelleft);
+			Settings::crit_keys.insert (Settings::wheelright);
 			Settings::crit_keys.insert (Settings::slow_mode);
 			Settings::crit_keys.insert (Settings::pause_key);
 
