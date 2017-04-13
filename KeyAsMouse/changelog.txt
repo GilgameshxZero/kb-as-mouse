@@ -19,3 +19,5 @@
 	fixed bug where the termination key would not have its effects blocked by the program upon release
 2.2.0
 	added options to move the mouse wheel horizontally, without physics implementation
+2.2.1
+	now interprets all injected mouse messages except self-injected mouse messages (as intended), instead of skipping all injected mouse messages

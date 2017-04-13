@@ -43,7 +43,7 @@ namespace KeyAsMouse {
 
 			switch (wParam) {
 				case WM_MOUSEMOVE: {
-					if (!(hs->flags & LLMHF_INJECTED))
+					if (!(hs->dwExtraInfo == TimerManager::event_extra_info)) //process message if not sent from this program
 						MouseMove (hs->pt);
 					break;
 				}

@@ -6,6 +6,7 @@ namespace KeyAsMouse {
 		DWORD last_frame = 0;
 		std::pair<LONG, LONG> last_mouse_pos = std::make_pair (0, 0); //position of the mouse, in dx and dy, at the time TimerProc last sent a mouse position update message; only used in non-DiffMode
 		bool timer_running = false;
+		ULONG_PTR event_extra_info;
 
 		VOID CALLBACK TimerProc (HWND hwnd, UINT uMsg, UINT_PTR idEvent, DWORD time) {
 			static INPUT iev;
@@ -14,7 +15,6 @@ namespace KeyAsMouse {
 			if (!timer_running)
 				return VOID ();
 
-			iev.type = INPUT_MOUSE;
 			iev.mi.dwFlags = NULL;
 			iev.mi.mouseData = 0;
 			iev.mi.time = 0;
@@ -24,6 +24,8 @@ namespace KeyAsMouse {
 			//scale acceleration calculations by the time between the last frame and the current frame; if the timer was just started, assume that the last frame offured according to fps specs
 			static double tdiff_s; //time difference in seconds between now and the last time this timer was run
 			if (last_frame == 0) { //beginning timer; we need to replace elapse time
+				iev.type = INPUT_MOUSE;
+				iev.mi.dwExtraInfo = TimerManager::event_extra_info = static_cast<ULONG_PTR>(idEvent);
 				last_frame = time - mspf;
 				SetTimer (hwnd, idEvent, mspf, TimerProc);
 			}
