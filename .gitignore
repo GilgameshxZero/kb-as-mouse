@@ -1,8 +1,10 @@
-.vs
+**/.vscode/
+**/.vs/
 
-*.iobj
-*.ipdb
-*.pdb
-*.ilk
-*Debug*.exe
-*.suo
+**.user
+**.dropbox.attr
+**.aps
+**.DS_Store
+
+/bin/
+/obj/

@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|Win32">
+      <Configuration>debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|Win32">
+      <Configuration>release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{DB626897-943E-422A-8307-F0353E2E0069}</ProjectGuid>
+    <RootNamespace>key-as-mouse</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v142</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <OutDir>$(SolutionDir)..\bin\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)-$(Platform)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <OutDir>$(SolutionDir)..\bin\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)-$(Platform)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <OutDir>$(SolutionDir)..\bin\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)-$(Platform)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <OutDir>$(SolutionDir)..\bin\</OutDir>
+    <IntDir>$(SolutionDir)..\obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>$(ProjectName)-$(Platform)-$(Configuration)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <PreBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(SolutionDir)..\build\" &amp;&amp; call "post-build-event.bat"</Command>
+      <Message>Running post-build event...</Message>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>cd "$(SolutionDir)..\build\" &amp;&amp; call "pre-build-event.bat"</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Running pre-build event...</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <PreBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(SolutionDir)..\build\" &amp;&amp; call "post-build-event.bat"</Command>
+      <Message>Running post-build event...</Message>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>cd "$(SolutionDir)..\build\" &amp;&amp; call "pre-build-event.bat"</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Running pre-build event...</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PreBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(SolutionDir)..\build\" &amp;&amp; call "post-build-event.bat"</Command>
+      <Message>Running post-build event...</Message>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>cd "$(SolutionDir)..\build\" &amp;&amp; call "pre-build-event.bat"</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Running pre-build event...</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PreBuildEvent />
+    <PostBuildEvent>
+      <Command>cd "$(SolutionDir)..\build\" &amp;&amp; call "post-build-event.bat"</Command>
+      <Message>Running post-build event...</Message>
+    </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>cd "$(SolutionDir)..\build\" &amp;&amp; call "pre-build-event.bat"</Command>
+    </PreBuildEvent>
+    <PreBuildEvent>
+      <Message>Running pre-build event...</Message>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\rain\cpp\algorithm-libraries.hpp" />
+    <ClInclude Include="..\rain\cpp\condition-variable.hpp" />
+    <ClInclude Include="..\rain\cpp\configuration.hpp" />
+    <ClInclude Include="..\rain\cpp\gdi-plus-include.hpp" />
+    <ClInclude Include="..\rain\cpp\gdi-plus-libraries.hpp" />
+    <ClInclude Include="..\rain\cpp\logstream.hpp" />
+    <ClInclude Include="..\rain\cpp\minmax.hpp" />
+    <ClInclude Include="..\rain\cpp\network-base.hpp" />
+    <ClInclude Include="..\rain\cpp\network-client-manager.hpp" />
+    <ClInclude Include="..\rain\cpp\network-headed-managers.hpp" />
+    <ClInclude Include="..\rain\cpp\network-libraries.hpp" />
+    <ClInclude Include="..\rain\cpp\network-recv-param.hpp" />
+    <ClInclude Include="..\rain\cpp\network-recv-thread.hpp" />
+    <ClInclude Include="..\rain\cpp\network-server-manager.hpp" />
+    <ClInclude Include="..\rain\cpp\network-smtp.hpp" />
+    <ClInclude Include="..\rain\cpp\network-socket-manager.hpp" />
+    <ClInclude Include="..\rain\cpp\network-utility.hpp" />
+    <ClInclude Include="..\rain\cpp\network-wsa-include.hpp" />
+    <ClInclude Include="..\rain\cpp\rain-window.hpp" />
+    <ClInclude Include="..\rain\cpp\rain.hpp" />
+    <ClInclude Include="..\rain\cpp\timer.hpp" />
+    <ClInclude Include="..\rain\cpp\utility-error.hpp" />
+    <ClInclude Include="..\rain\cpp\utility-filesystem.hpp" />
+    <ClInclude Include="..\rain\cpp\utility-libraries.hpp" />
+    <ClInclude Include="..\rain\cpp\utility-logging.hpp" />
+    <ClInclude Include="..\rain\cpp\utility-platform.hpp" />
+    <ClInclude Include="..\rain\cpp\utility-string.hpp" />
+    <ClInclude Include="..\rain\cpp\utility-time.hpp" />
+    <ClInclude Include="..\rain\cpp\windows-lam-include.hpp" />
+    <ClInclude Include="..\rc\build.hpp" />
+    <ClInclude Include="..\src\HookEventManager.hpp" />
+    <ClInclude Include="..\src\MKBState.hpp" />
+    <ClInclude Include="..\src\Settings.hpp" />
+    <ClInclude Include="..\src\TimerManager.hpp" />
+    <ClInclude Include="..\src\main.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\rain\cpp\algorithm-libraries.cpp" />
+    <ClCompile Include="..\rain\cpp\condition-variable.cpp" />
+    <ClCompile Include="..\rain\cpp\configuration.cpp" />
+    <ClCompile Include="..\rain\cpp\gdi-plus-libraries.cpp" />
+    <ClCompile Include="..\rain\cpp\logstream.cpp" />
+    <ClCompile Include="..\rain\cpp\network-base.cpp" />
+    <ClCompile Include="..\rain\cpp\network-client-manager.cpp" />
+    <ClCompile Include="..\rain\cpp\network-headed-managers.cpp" />
+    <ClCompile Include="..\rain\cpp\network-recv-param.cpp" />
+    <ClCompile Include="..\rain\cpp\network-recv-thread.cpp" />
+    <ClCompile Include="..\rain\cpp\network-server-manager.cpp" />
+    <ClCompile Include="..\rain\cpp\network-smtp.cpp" />
+    <ClCompile Include="..\rain\cpp\network-utility.cpp" />
+    <ClCompile Include="..\rain\cpp\rain-window.cpp" />
+    <ClCompile Include="..\rain\cpp\timer.cpp" />
+    <ClCompile Include="..\rain\cpp\utility-error.cpp" />
+    <ClCompile Include="..\rain\cpp\utility-filesystem.cpp" />
+    <ClCompile Include="..\rain\cpp\utility-libraries.cpp" />
+    <ClCompile Include="..\rain\cpp\utility-logging.cpp" />
+    <ClCompile Include="..\rain\cpp\utility-platform.cpp" />
+    <ClCompile Include="..\rain\cpp\utility-string.cpp" />
+    <ClCompile Include="..\rain\cpp\utility-time.cpp" />
+    <ClCompile Include="..\src\HookEventManager.cpp" />
+    <ClCompile Include="..\src\MKBState.cpp" />
+    <ClCompile Include="..\src\Settings.cpp" />
+    <ClCompile Include="..\src\TimerManager.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\rc\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\rc\rc.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\rain\cpp\readme.md" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
