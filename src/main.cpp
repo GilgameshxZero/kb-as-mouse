@@ -4,147 +4,80 @@ int CALLBACK WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR lpCmdLine,
 	int nCmdShow) {
+	// Limit so that we can only run one instance of this application.
+	if (CreateMutex(NULL, TRUE, "numpad-as-mouse") == NULL ||
+		GetLastError() == ERROR_ALREADY_EXISTS) {
+		MessageBox(NULL, "Another instance of numpad-as-mouse is already running.", "numpad-as-mouse", MB_OK);
+		return 1;
+	}
+
 	return NumpadAsMouse::start(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 }
 
 namespace NumpadAsMouse {
-	int screen_width, screen_height;
+	State state;
 
 	int start(HINSTANCE hInstance,
 		HINSTANCE hPrevInstance,
 		LPSTR lpCmdLine,
 		int nCmdShow) {
-
-		int csettings = 0;
-		POINT mouse_pos;
-		RECT wrect;
-		BOOL bRet;
-		MSG msg;
-
 		// catch memory leaks and errors
 		HANDLE hMemoryLeaks = Rain::logMemoryLeaks("memory-leaks.txt");
 
-		// read config file
-		Rain::Configuration configuration(".cfg");
-		std::ifstream config;
-		config.open(".cfg");
-		if (!config.good())
-			return Rain::reportError(-1, "No configuration file found.");
-		
-		const int NUM_SETTINGS = 27;
-		for (;; csettings++) {
-			std::string setting;
+		// Create window for system tray icon events.
+		static const std::string CLASS_NAME = "numpad-as-mouse-wc";
+		WNDCLASSEX wndClass;
+		wndClass.cbSize = sizeof(WNDCLASSEX);
+		wndClass.style = NULL;
+		wndClass.lpfnWndProc = mainWndProc;
+		wndClass.cbClsExtra = 0;
+		wndClass.cbWndExtra = 0;
+		wndClass.hInstance = hInstance;
+		wndClass.hIcon = NULL;
+		wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+		wndClass.hbrBackground = NULL;
+		wndClass.lpszMenuName = NULL;
+		wndClass.lpszClassName = CLASS_NAME.c_str();
+		wndClass.hIconSm = NULL;
 
-			std::getline(config, setting, config.widen(':'));
-			if (!config.good())
-				break;
-
-			// remove whitespace from setting name
-			setting.erase(std::remove_if(setting.begin(), setting.end(), ::isspace),
-				setting.end());
-
-			if (setting == "LeftKey")
-				config >> left;
-			else if (setting == "RightKey")
-				config >> right;
-			else if (setting == "UpKey")
-				config >> up;
-			else if (setting == "DownKey")
-				config >> down;
-			else if (setting == "LeftClick")
-				config >> lclick;
-			else if (setting == "RightClick")
-				config >> rclick;
-			else if (setting == "MiddleClick")
-				config >> mclick;
-			else if (setting == "WheelUp")
-				config >> wheelup;
-			else if (setting == "WheelDown")
-				config >> wheeldown;
-			else if (setting == "WheelUpSingle")
-				config >> wheelupsingle;
-			else if (setting == "WheelDownSingle")
-				config >> wheeldownsingle;
-			else if (setting == "WheelLeft")
-				config >> wheelleft;
-			else if (setting == "WheelRight")
-				config >> wheelright;
-			else if (setting == "SlowMode")
-				config >> slow_mode;
-			else if (setting == "PauseKey")
-				config >> pause_key;
-			else if (setting == "TerminateKey")
-				config >> terminate_key;
-			else if (setting == "FramesPerSecond")
-				config >> fps;
-			else if (setting == "Acceleration")
-				config >> mouse_acc;
-			else if (setting == "Resistance")
-				config >> resist;
-			else if (setting == "ResistPower")
-				config >> resist_power;
-			else if (setting == "ScrollAcc")
-				config >> scroll_acc;
-			else if (setting == "ScrollResist")
-				config >> scroll_resist;
-			else if (setting == "ScrollResistPower")
-				config >> scroll_resist_power;
-			else if (setting == "MinVelocityThreshold")
-				config >> min_vel_thresh;
-			else if (setting == "MinScrollVelThresh")
-				config >> min_scroll_vel_thresh;
-			else if (setting == "SlowRatio")
-				config >> slow_ratio;
-			else if (setting == "DiffMode")
-				config >> diff_mode;
-			else
-				return Rain::reportError(
-					-2, "Configuration file contained unrecognised setting.");
+		if (!RegisterClassEx(&wndClass)) {
+			return -1;
 		}
 
-		if (csettings != NUM_SETTINGS)
-			return Rain::reportError(
-				-3, "Configuration file contained too many or too little settings.");
+		HWND mainWnd = CreateWindowEx(WS_EX_NOACTIVATE | WS_EX_TOPMOST | WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW, CLASS_NAME.c_str(), "", WS_POPUP, 0, 0, 0, 0, NULL, NULL, hInstance, NULL);
 
-		config.close();
+		// System tray icon.
+		NOTIFYICONDATA nid;
 
-		// init other variables
-		crit_keys.insert(left);
-		crit_keys.insert(right);
-		crit_keys.insert(up);
-		crit_keys.insert(down);
-		crit_keys.insert(lclick);
-		crit_keys.insert(rclick);
-		crit_keys.insert(mclick);
-		crit_keys.insert(wheelup);
-		crit_keys.insert(wheeldown);
-		crit_keys.insert(wheelupsingle);
-		crit_keys.insert(wheeldownsingle);
-		crit_keys.insert(wheelleft);
-		crit_keys.insert(wheelright);
-		crit_keys.insert(slow_mode);
-		crit_keys.insert(pause_key);
+		ZeroMemory(&nid, sizeof(NOTIFYICONDATA));
+		nid.cbSize = sizeof(NOTIFYICONDATA);
+		nid.uID = 1;
+		nid.uFlags = NIF_ICON | NIF_MESSAGE;
+		nid.hIcon = static_cast<HICON>(
+			LoadImage(hInstance,
+			MAKEINTRESOURCE(1),
+			IMAGE_ICON,
+			GetSystemMetrics(SM_CXSMICON),
+			GetSystemMetrics(SM_CYSMICON),
+			LR_DEFAULTCOLOR));
+		nid.hWnd = mainWnd;
+		nid.uCallbackMessage = WM_APP;
 
-		GetCursorPos(&mouse_pos);
-		exact_pos = std::make_pair(
-			static_cast<double>(mouse_pos.x), static_cast<double>(mouse_pos.y));
-		mouse_vel = mouse_pos_diff = std::make_pair(0, 0);
-		wheel_pos = 0;
-		wheel_vel = 0;
-		paused = false;
+		if (!Shell_NotifyIcon(NIM_ADD, &nid)) {
+			return -1;
+		}
 
-		GetWindowRect(GetDesktopWindow(), &wrect);
-		screen_width = wrect.right - wrect.left;
-		screen_height = wrect.bottom - wrect.top;
+		DestroyIcon(nid.hIcon);
 
-		mspf = 1000 / fps;
+		// read config file
+		state.overwriteSettingsFromFile(".cfg");
 
 		// install hooks and message loop
 		HHOOK llkb_hook = SetWindowsHookEx(
-						WH_KEYBOARD_LL, NumpadAsMouse::LLKBProc, NULL, NULL),
-					llmouse_hook = SetWindowsHookEx(
-						WH_MOUSE_LL, NumpadAsMouse::LLMouseProc, NULL, NULL);
+			WH_KEYBOARD_LL, NumpadAsMouse::LLKBProc, NULL, NULL);
 
+		BOOL bRet;
+		MSG msg;
 		while ((bRet = GetMessage(&msg, NULL, 0, 0)) != 0) {
 			if (bRet == -1)
 				return Rain::reportError(-1, "Message loop returned -1.");
@@ -153,14 +86,36 @@ namespace NumpadAsMouse {
 				DispatchMessage(&msg);
 			}
 		}
+		MessageBox(NULL, "Terminated numpad-as-mouse.", "numpad-as-mouse", MB_OK);
 
 		// clean up and exit
 		UnhookWindowsHookEx(llkb_hook);
-		UnhookWindowsHookEx(llmouse_hook);
 
 		if (hMemoryLeaks != NULL)
 			CloseHandle(hMemoryLeaks);
 
 		return 0;
+	}
+
+	LRESULT CALLBACK mainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+		switch (uMsg) {
+			case WM_APP:
+				// Tray message.
+				switch (lParam) {
+					case WM_LBUTTONUP:
+						state.paused = !state.paused;
+						MessageBox(NULL, ((state.paused ? std::string("Paused") : std::string("Resumed")) + " numpad-as-mouse.").c_str(), "numpad-as-mouse", MB_OK);
+						break;
+					case WM_RBUTTONUP:
+						PostQuitMessage(0);
+						break;
+				}
+				break;
+
+			default:
+				break;
+		}
+
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 }

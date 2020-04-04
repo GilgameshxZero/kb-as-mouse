@@ -1,24 +1,17 @@
 #pragma once
 #include "../rain/cpp/rain.hpp"
 
-#include "HookEventManager.hpp"
-#include "Settings.hpp"
-#include "TimerManager.hpp"
+#include "kb-hook.hpp"
+#include "state.hpp"
+#include "timer-proc.hpp"
 
-#include <algorithm>
-#include <fstream>
-#include <map>
+#include <Shellapi.h>
 
-int CALLBACK WinMain(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR lpCmdLine,
-	int nCmdShow);
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
 
 namespace NumpadAsMouse {
-	extern int screen_width, screen_height;
+	extern State state;
 
-	int start(HINSTANCE hInstance,
-		HINSTANCE hPrevInstance,
-		LPSTR lpCmdLine,
-		int nCmdShow);
+	int start(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
+	LRESULT CALLBACK mainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 }

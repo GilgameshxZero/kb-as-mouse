@@ -109,32 +109,17 @@
     <ClInclude Include="..\src\main.hpp">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\TimerManager.hpp">
+    <ClInclude Include="..\src\state.hpp">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\Settings.hpp">
+    <ClInclude Include="..\src\timer-proc.hpp">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\MKBState.hpp">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\HookEventManager.hpp">
+    <ClInclude Include="..\src\kb-hook.hpp">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\HookEventManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\MKBState.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Settings.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\TimerManager.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\rain\cpp\algorithm-libraries.cpp">
       <Filter>rain\cpp</Filter>
     </ClCompile>
@@ -202,6 +187,15 @@
       <Filter>rain\cpp</Filter>
     </ClCompile>
     <ClCompile Include="..\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\state.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\timer-proc.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\kb-hook.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

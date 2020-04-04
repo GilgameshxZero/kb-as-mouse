@@ -205,10 +205,9 @@
     <ClInclude Include="..\rain\cpp\utility-time.hpp" />
     <ClInclude Include="..\rain\cpp\windows-lam-include.hpp" />
     <ClInclude Include="..\rc\build.hpp" />
-    <ClInclude Include="..\src\HookEventManager.hpp" />
-    <ClInclude Include="..\src\MKBState.hpp" />
-    <ClInclude Include="..\src\Settings.hpp" />
-    <ClInclude Include="..\src\TimerManager.hpp" />
+    <ClInclude Include="..\src\kb-hook.hpp" />
+    <ClInclude Include="..\src\state.hpp" />
+    <ClInclude Include="..\src\timer-proc.hpp" />
     <ClInclude Include="..\src\main.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -234,10 +233,9 @@
     <ClCompile Include="..\rain\cpp\utility-platform.cpp" />
     <ClCompile Include="..\rain\cpp\utility-string.cpp" />
     <ClCompile Include="..\rain\cpp\utility-time.cpp" />
-    <ClCompile Include="..\src\HookEventManager.cpp" />
-    <ClCompile Include="..\src\MKBState.cpp" />
-    <ClCompile Include="..\src\Settings.cpp" />
-    <ClCompile Include="..\src\TimerManager.cpp" />
+    <ClCompile Include="..\src\kb-hook.cpp" />
+    <ClCompile Include="..\src\state.cpp" />
+    <ClCompile Include="..\src\timer-proc.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
