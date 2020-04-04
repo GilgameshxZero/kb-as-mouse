@@ -9,7 +9,7 @@ namespace NumpadAsMouse {
 
 		// incase off timing issues when the Timer is killed
 		if (!state.isTimerRunning)
-			return VOID();
+			return;
 
 		// Static is important since we access the memory outside of this function from SendInput.
 		static INPUT inputEv;

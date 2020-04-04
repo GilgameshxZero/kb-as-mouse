@@ -1,16 +1,58 @@
 # numpad-as-mouse
 
-Converts the numpad into mouse movement on Windows. Smoother than the Windows default option. Options to use keys other than the numpad.
+Perform mouse actions with the keyboard on Windows.
 
----
+Smoother than the Windows default option. Options to use keys other than the numpad.
 
-Keys specified in the configuration file (config.txt) are to be VK codes. You can find a list of VK codes here: https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx. The scroll wheel mechanics are exactly the same as the mouse movement mechanics on each axis. Negative numbers, such as -1, will disable a key (however, it is ill-advised to input a negative number for non-key settings).
+You'll want to grab the `rain` submodule with:
 
-Low FramesPerSecond may result in instabilities; for best results, run at framesPerSecond 60.
+```bash
+git submodule init
+git submodule update
+```
 
-When the TerminateKey is pressed, the program will exit.
+## Configuration
+
+The keys used in `numpad-as-mouse` can be configured by adding a `.cfg` file in the working directory of `numpad-as-mouse`. `.cfg` can contain the following values:
+
+Option|Default|Usage
+-|-|-
+`upKey`|`104`|Key code to move mouse up.
+`rightKey`|`102`|Key code to move mouse right.
+`downKey`|`101`|Key code to move mouse down.
+`leftKey`|`100`|Key code to move mouse left.
+`leftClickKey`|`96`|Key code to left click.
+`rightClickKey`|`110`|Key code to right click.
+`middleClickKey`|`98`|Key code to middle click.
+`scrollUpKey`|`105`|Key code to scroll up.
+`scrollDownKey`|`103`|Key code to scroll down.
+`scrollLeftSingleKey`|`97`|Key code to scroll left one notch.
+`scrollRightSingleKey`|`99`|Key code to scroll right one notch.
+`slowKey`|`107`|Key code to apply a modifier to acceleration values for mouse movement and scrolling.
+`pauseKey`|`-1`|Key code to pause the application.
+`terminateKey`|`-1`|Key code to terminate the application.
+`framesPerSecond`|`90`|Frames per second for the physics engine. Higher results in smoother motion and movement, but decreased performance.
+`mouseResistance`|`10`|"Air resistance" applied to mouse movement.
+`mouseAcceleration`|`80`|Acceleration applied to mouse when moved.
+`scrollResistance`|`10`|"Air resistance" applied to scrolling.
+`scrollAcceleration`|`500`|Acceleration applied to scroll wheel when moved.
+`slowRatio`|`0.2`|Modifier applied to mouse movement and scrolling accelerations when `slowKey` held.
+
+A `-1` invalidates the key code option. Specify key codes with VK codes (<https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx>).
+
+An example `.cfg` might look like the following:
+
+```cfg
+terminateKey 93
+slowRatio 0.3
+```
 
 ## Changelog
+
+### 3.0.2
+
+* Cleanup small amounts of code.
+* Cleanup readme.
 
 ### 3.0.1
 

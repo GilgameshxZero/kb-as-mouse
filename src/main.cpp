@@ -86,7 +86,6 @@ namespace NumpadAsMouse {
 				DispatchMessage(&msg);
 			}
 		}
-		MessageBox(NULL, "Terminated numpad-as-mouse.", "numpad-as-mouse", MB_OK);
 
 		// clean up and exit
 		UnhookWindowsHookEx(llkb_hook);
@@ -94,6 +93,7 @@ namespace NumpadAsMouse {
 		if (hMemoryLeaks != NULL)
 			CloseHandle(hMemoryLeaks);
 
+		MessageBox(NULL, "Terminated numpad-as-mouse.", "numpad-as-mouse", MB_OK);
 		return 0;
 	}
 
