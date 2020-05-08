@@ -49,6 +49,10 @@ slowRatio 0.3
 
 ## Changelog
 
+### 3.0.3
+
+* Update to `rain` `2.0.0`, which removes `css` dependencies, and relink files.
+
 ### 3.0.2
 
 * Cleanup small amounts of code.
