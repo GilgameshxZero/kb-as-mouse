@@ -4,7 +4,6 @@ namespace NumpadAsMouse {
 	LRESULT CALLBACK LLKBProc(_In_ int nCode,
 		_In_ WPARAM wParam,
 		_In_ LPARAM lParam) {
-
 		if (nCode < 0)
 			return CallNextHookEx(NULL, nCode, wParam, lParam);
 
@@ -28,10 +27,19 @@ namespace NumpadAsMouse {
 	}
 
 	bool KeyDown(int vkCode) {
+		// Keep INPUT structures static since SendInput seems to have weird behavior with memory accesses.
+		static INPUT inputEv;
+		inputEv.type = INPUT_MOUSE;
+		inputEv.mi.dwFlags = NULL;
+		inputEv.mi.dx = 0;
+		inputEv.mi.dy = 0;
+		inputEv.mi.mouseData = 0;
+		inputEv.mi.time = 0;
+
 		// this stores the keydown status prior to alteration; some keys we do not
 		// want to process multiple keydown messages when held (such as pause and
 		// the clicks
-		static bool keyWasDown;
+		bool keyWasDown;
 
 		keyWasDown = state.isVKKeyDown[vkCode];
 		state.isVKKeyDown[vkCode] = true;
@@ -43,8 +51,6 @@ namespace NumpadAsMouse {
 			if ((!keyWasDown &&
 				(vkCode == state.leftClickKey || vkCode == state.rightClickKey || vkCode == state.middleClickKey)) ||
 				vkCode == state.scrollLeftSingleKey || vkCode == state.scrollRightSingleKey) {
-				INPUT inputEv;
-				setupMouseInputEvent(inputEv);
 				if (vkCode == state.leftClickKey)
 					inputEv.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
 				else if (vkCode == state.rightClickKey)
@@ -71,6 +77,15 @@ namespace NumpadAsMouse {
 		return false;
 	}
 	bool KeyUp(int vkCode) {
+		// Keep INPUT structures static since SendInput seems to have weird behavior with memory accesses.
+		static INPUT inputEv;
+		inputEv.type = INPUT_MOUSE;
+		inputEv.mi.dwFlags = NULL;
+		inputEv.mi.dx = 0;
+		inputEv.mi.dy = 0;
+		inputEv.mi.mouseData = 0;
+		inputEv.mi.time = 0;
+
 		state.isVKKeyDown[vkCode] = false;
 
 		if (vkCode == state.terminateKey) {
@@ -87,8 +102,6 @@ namespace NumpadAsMouse {
 
 		if (state.shouldInterceptKey(vkCode)) {
 			if (vkCode == state.leftClickKey || vkCode == state.rightClickKey || vkCode == state.middleClickKey) {
-				INPUT inputEv;
-				setupMouseInputEvent(inputEv);
 				if (vkCode == state.leftClickKey)
 					inputEv.mi.dwFlags = MOUSEEVENTF_LEFTUP;
 				else if (vkCode == state.rightClickKey)
@@ -100,13 +113,5 @@ namespace NumpadAsMouse {
 			return true;
 		}
 		return false;
-	}
-
-	void setupMouseInputEvent(INPUT &inputEv) {
-		inputEv.type = INPUT_MOUSE;
-		inputEv.mi.dx = 0;
-		inputEv.mi.dy = 0;
-		inputEv.mi.mouseData = 0;
-		inputEv.mi.time = 0;
 	}
 }

@@ -7,7 +7,7 @@ namespace NumpadAsMouse {
 
 		static DWORD timeOfPrevFrame = 0;
 
-		// incase off timing issues when the Timer is killed
+		// incase of timing issues when the Timer is killed
 		if (!state.isTimerRunning)
 			return;
 

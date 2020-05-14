@@ -89,6 +89,7 @@ namespace NumpadAsMouse {
 
 		// clean up and exit
 		UnhookWindowsHookEx(llkb_hook);
+		DestroyWindow(mainWnd);
 
 		if (hMemoryLeaks != NULL)
 			CloseHandle(hMemoryLeaks);

@@ -6,5 +6,7 @@
 **.aps
 **.DS_Store
 
+**/memory-leaks.txt
+
 /bin/
 /obj/

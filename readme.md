@@ -49,6 +49,11 @@ slowRatio 0.3
 
 ## Changelog
 
+### 3.1.0
+
+* Tray icon now removes itself on normal exit.
+* Ideally, `SendInput` should be more stable now, fixing a bug where program would stall as soon as the left button was pressed very occasionally.
+
 ### 3.0.3
 
 * Update to `rain` `2.0.0`, which removes `css` dependencies, and relink files.

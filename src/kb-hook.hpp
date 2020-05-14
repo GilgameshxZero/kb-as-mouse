@@ -14,7 +14,4 @@ namespace NumpadAsMouse {
 	// true only if the vkkey is to be intercepted
 	bool KeyDown(int vkCode);
 	bool KeyUp(int vkCode);
-
-	// sets up an INPUT structure for MOUSEEVENT
-	void setupMouseInputEvent(INPUT &inputEv);
 }
