@@ -1,44 +1,51 @@
-# numpad-as-mouse
+# kb-as-mouse (KBAM)
 
-Perform mouse actions with the keyboard on Windows.
+Perform mouse actions with the keyboard (Windows-only).
 
-Smoother than the Windows default option. Options to use keys other than the numpad.
+Option to customize keymapping (movement, scrolling, modifier) and acceleration/resistance behavior.
 
-You'll want to grab the `rain` submodule with:
+By default, movement is controlled by the `pl;'` keys, and left click is right ALT. You can pause the program by pressing the applications/hamburger icon key (most keyboards have this), or by left-clicking/right-clicking the tray icon. Other defaults/customization options are described in a later section.
 
-```bash
-git submodule init
-git submodule update
-```
+Note: numpad keys are usable—however, they’re still a bit buggy when used with SHIFT. I’m looking for a workaraound for this.
 
-## Configuration
+## Why use KBAM instead of [AutoHotkey, Windows Ease of Access, etc.]?
 
-The keys used in `numpad-as-mouse` can be configured by adding a `.cfg` file in the working directory of `numpad-as-mouse`. `.cfg` can contain the following values:
+KBAM is built for simplicity—while you could accomplish the same thing with an AHK script, customization of the script is more difficult and requires you to learn the range of the AHK scripting language. Other options, such as Window’s built-in Ease of Access allowing for use of the numpad as a mouse, is limited in scope and has fewer options (acceleration, resistance, customization of keys, etc.).
+
+## FAQ
+
+### KBAM isn’t working in some windows (Task Manager, games, etc.).
+
+Task Manager and many games are run in Adminstrator Mode (elevated). If KBAM is not run elevated, it cannot inject events into elevated applications. So, run KBAM with elevated permissions (right click KBAM, and select “Run as administrator”).
+
+## Customization
+
+The keys used in KBAM can be configured by adding a `kb-as-mouse.cfg` file in the working directory of `numpad-as-mouse`. `kb-as-mouse.cfg` can contain the following values:
 
 Option|Default|Usage
 -|-|-
-`upKey`|`104`|Key code to move mouse up.
-`rightKey`|`102`|Key code to move mouse right.
-`downKey`|`101`|Key code to move mouse down.
-`leftKey`|`100`|Key code to move mouse left.
-`leftClickKey`|`96`|Key code to left click.
-`rightClickKey`|`110`|Key code to right click.
-`middleClickKey`|`98`|Key code to middle click.
-`scrollUpKey`|`105`|Key code to scroll up.
-`scrollDownKey`|`103`|Key code to scroll down.
-`scrollLeftSingleKey`|`97`|Key code to scroll left one notch.
-`scrollRightSingleKey`|`99`|Key code to scroll right one notch.
-`slowKey`|`107`|Key code to apply a modifier to acceleration values for mouse movement and scrolling.
-`pauseKey`|`-1`|Key code to pause the application.
-`terminateKey`|`-1`|Key code to terminate the application.
+`upKey`|`80` (`p` key)|Key code to move mouse up.
+`rightKey`|`222` (`'` or `"`)|Key code to move mouse right.
+`downKey`|`186` (`;` or `:`)|Key code to move mouse down.
+`leftKey`|`76` (`l`)|Key code to move mouse left.
+`leftClickKey`|`165` (right ALT)|Key code to left click.
+`rightClickKey`|`13` (ENTER)|Key code to right click.
+`middleClickKey`|`161` (right SHIFT)|Key code to middle click.
+`scrollUpKey`|`219` (`o`)|Key code to scroll up.
+`scrollDownKey`|`79` (`[` or `{`)|Key code to scroll down.
+`scrollLeftSingleKey`|`190` (`.` or `>`)|Key code to scroll left one notch.
+`scrollRightSingleKey`|`191` (`/` or `?`)|Key code to scroll right one notch.
+`slowKey`|`221` (`]` or `}`)|Key code (held) to apply a modifier to acceleration values for mouse movement and scrolling.
+`pauseKey`|`93` (applications i.e. hamburger menu key)|Key code to pause the application.
+`terminateKey`|`-1` (none)|Key code to terminate the application.
 `framesPerSecond`|`90`|Frames per second for the physics engine. Higher results in smoother motion and movement, but decreased performance.
 `mouseResistance`|`10`|"Air resistance" applied to mouse movement.
-`mouseAcceleration`|`80`|Acceleration applied to mouse when moved.
+`mouseAcceleration`|`100`|Acceleration applied to mouse when moved.
 `scrollResistance`|`10`|"Air resistance" applied to scrolling.
-`scrollAcceleration`|`500`|Acceleration applied to scroll wheel when moved.
+`scrollAcceleration`|`300`|Acceleration applied to scroll wheel when moved.
 `slowRatio`|`0.2`|Modifier applied to mouse movement and scrolling accelerations when `slowKey` held.
 
-A `-1` invalidates the key code option. Specify key codes with VK codes (<https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx>).
+A `-1` invalidates the key code option. Specify key codes with VK codes: <https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes>. Note that the configuration file takes numbers in decimal—whereas they’re specified in hexidecimal on MSDN.
 
 An example `.cfg` might look like the following:
 
@@ -47,75 +54,19 @@ terminateKey 93
 slowRatio 0.3
 ```
 
-## Changelog
+## Known Issues
 
-### 3.1.0
+* Fix occasional stalling bug when left mouse button is simulated.
+* Check physics/hook engines and make sure they’re up to standard.
+* SHIFT+numpad still doesn’t quite work.
 
-* Tray icon now removes itself on normal exit.
-* Ideally, `SendInput` should be more stable now, fixing a bug where program would stall as soon as the left button was pressed very occasionally.
+## Build
 
-### 3.0.3
+You'll want to grab the `rain` submodule with:
 
-* Update to `rain` `2.0.0`, which removes `css` dependencies, and relink files.
+```bash
+git submodule init
+git submodule update
+```
 
-### 3.0.2
-
-* Cleanup small amounts of code.
-* Cleanup readme.
-
-### 3.0.1
-
-* Renamed `Settings` to lowercase.
-* Change relevant `CRLF` to `LF`.
-* Removed powers in physics and simplified physics calculations.
-* Configuration file is now `.cfg`, and overwrites built-in default configuration options.
-* Removed low-level mouse hook.
-* Added `MessageBox` messages.
-* Limit to one `numpad-as-mouse` instance.
-* Added tray icon to manage program state (pause, exit).
-* Updated app icon.
-
-### 3.0.0
-
-*This version does not build.*
-
-* Rename to `numpad-as-mouse`.
-* Update `rain` library.
-* Started code refactor with style guide from `rain`.
-* Renaming `Settings` to lowercase.
-
-### 2.2.1
-
-* now interprets all injected mouse messages except self-injected mouse messages (as intended), instead of skipping all injected mouse messages
-
-### 2.2.0
-
-* added options to move the mouse wheel horizontally, without physics implementation
-
-### 2.1.2
-
-* fixed bug where holding any of the click keys or pause would cause corresponding down messages to be sent multiple times (single wheel keys still work as before)
-* fixed bug where the termination key would not have its effects blocked by the program upon release
-
-### 2.1.1
-
-* added setting for SlowMode speed reduction (or increase)
-
-### 2.1.0
-
-* added DiffMode, a different way mouse movement is processed, typically useful for applications where the mouse is fixed in a predetermined location, such as most framesPerSeconds or Minecraft
-* added SlowMode, such that when a key is being held all scroll and mouse move accelerations are reduced by half
-* added pause capability, which toggles the program functions, instead of turning it off directly like TerminateKey
-* added scrollUpKeySingle/scrollDownKeySingle, two keys that send exactly one tick of the scroll wheel when pressed/held, unlike the scrollUpKey/scrollDownKey keys, which have physics applied to the scroll wheel
-* cleaned up mouse messages to be adhere to standards more
-
-### 2.0.0
-
-* code refactoring
-* reimplemented mouse and scroll wheel physics to be more flexible and natural
-* reformatted config file and added flexibility to format interpretation
-* reduced CPU usage by shutting off the timer while velocity of mouse or scroll wheel is low
-* removed timer bug
-* added program icon
-
-### 1.0.0
+The project is setup as a Visual Studio project in `build/`.

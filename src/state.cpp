@@ -1,9 +1,7 @@
 #include "state.hpp"
 
-namespace NumpadAsMouse {
-	State::State() {
-		this->refreshInterceptKeys();
-	}
+namespace KbAsMouse {
+	State::State() { this->refreshInterceptKeys(); }
 
 	void State::overwriteSettingsFromFile(std::string file) {
 		static const std::map<std::string, int &> INT_SETTINGS_MAP = {
@@ -30,15 +28,47 @@ namespace NumpadAsMouse {
 			{"scrollAcceleration", this->scrollAcceleration},
 			{"slowRatio", this->slowRatio},
 		};
-		Rain::Configuration fileSettings(file);
+		std::map<std::string, std::string> fileSettings;
+		std::ifstream in(file, std::ios::binary);
+		std::string line;
+		while (std::getline(in, line)) {
+			if (line.back() == '\r') {
+				line.pop_back();
+			}
+			if (line.empty()) {
+				continue;
+			}
 
-		for (auto it = INT_SETTINGS_MAP.begin(); it != INT_SETTINGS_MAP.end(); it++) {
-			if (!fileSettings.has(it->first)) continue;
-			it->second = fileSettings[it->first].i();
+			// scope to right configuration option
+			std::size_t level;
+			for (level = 0; level < line.size(); level++) {
+				if (line[level] != '\t') {
+					break;
+				}
+			}
+
+			// this option
+			Rain::String::trimWhitespaceStr(&line);
+			std::size_t keyInd;
+			for (keyInd = 0; keyInd < line.size(); keyInd++) {
+				if (std::isspace(line[keyInd])) {
+					break;
+				}
+			}
+			fileSettings[line.substr(0, keyInd)] = line.substr(keyInd);
+			Rain::String::trimWhitespaceStr(&fileSettings[line.substr(0, keyInd)]);
 		}
-		for (auto it = DOUBLE_SETTINGS_MAP.begin(); it != DOUBLE_SETTINGS_MAP.end(); it++) {
-			if (!fileSettings.has(it->first)) continue;
-			it->second = fileSettings[it->first].d();
+		in.close();
+
+		for (auto it = INT_SETTINGS_MAP.begin(); it != INT_SETTINGS_MAP.end();
+				 it++) {
+			if (fileSettings.find(it->first) == fileSettings.end()) continue;
+			it->second = std::strtol(fileSettings[it->first].c_str(), NULL, 10);
+		}
+		for (auto it = DOUBLE_SETTINGS_MAP.begin(); it != DOUBLE_SETTINGS_MAP.end();
+				 it++) {
+			if (fileSettings.find(it->first) == fileSettings.end()) continue;
+			it->second = std::strtold(fileSettings[it->first].c_str(), NULL);
 		}
 
 		this->refreshInterceptKeys();
@@ -46,6 +76,11 @@ namespace NumpadAsMouse {
 
 	bool State::shouldInterceptKey(int vkCode) {
 		return this->keysToIntercept.find(vkCode) != this->keysToIntercept.end();
+	}
+
+	bool State::isShiftDown() {
+		return this->isVKKeyDown[16] || this->isVKKeyDown[160] ||
+			this->isVKKeyDown[161];
 	}
 
 	void State::refreshInterceptKeys() {
@@ -66,4 +101,6 @@ namespace NumpadAsMouse {
 			this->terminateKey,
 		};
 	}
+
+	State state;
 }

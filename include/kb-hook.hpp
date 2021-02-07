@@ -1,11 +1,11 @@
 #pragma once
-#include "../rain/src/rain.hpp"
 
 #include "state.hpp"
 #include "timer-proc.hpp"
-#include "main.hpp"
 
-namespace NumpadAsMouse {
+#include <rain.hpp>
+
+namespace KbAsMouse {
 	LRESULT CALLBACK LLKBProc(_In_ int nCode,
 		_In_ WPARAM wParam,
 		_In_ LPARAM lParam);

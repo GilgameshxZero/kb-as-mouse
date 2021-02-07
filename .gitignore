@@ -1,12 +1,10 @@
-**/.vscode/
 **/.vs/
+**/bin/
+**/obj/
 
-**.user
-**.dropbox.attr
 **.aps
+**.db
+**.dropbox.attr
 **.DS_Store
-
-**/memory-leaks.txt
-
-/bin/
-/obj/
+**.stackdump
+**.user

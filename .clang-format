@@ -1,0 +1,32 @@
+{
+	BasedOnStyle: Chromium,
+
+	UseTab: Always,
+	TabWidth: 2,
+
+	PointerAlignment: Right,
+
+	IncludeBlocks: Preserve,
+	SortUsingDeclarations: false,
+
+	NamespaceIndentation: All,
+	FixNamespaceComments: false,
+
+	AccessModifierOffset: 0,
+	IndentCaseLabels: true,
+
+	ReflowComments: true,
+	ColumnLimit: 80,
+
+	AlignAfterOpenBracket: DontAlign,
+	AlignOperands: false,
+	ContinuationIndentWidth: 2,
+
+	AllowShortIfStatementsOnASingleLine: true,
+	AllowShortLoopsOnASingleLine: true,
+
+	BinPackArguments: false,
+	BinPackParameters: false,
+	AlignTrailingComments: false,
+	AlignConsecutiveDeclarations: false,
+}
