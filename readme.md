@@ -29,20 +29,20 @@ Option|Default|Usage
 `downKey`|`186` (`;` or `:`)|Key code to move mouse down.
 `leftKey`|`76` (`l`)|Key code to move mouse left.
 `leftClickKey`|`165` (right ALT)|Key code to left click.
-`rightClickKey`|`13` (ENTER)|Key code to right click.
+`rightClickKey`|`221` (`]` or `}`)|Key code to right click.
 `middleClickKey`|`161` (right SHIFT)|Key code to middle click.
 `scrollUpKey`|`219` (`o`)|Key code to scroll up.
 `scrollDownKey`|`79` (`[` or `{`)|Key code to scroll down.
 `scrollLeftSingleKey`|`190` (`.` or `>`)|Key code to scroll left one notch.
 `scrollRightSingleKey`|`191` (`/` or `?`)|Key code to scroll right one notch.
-`slowKey`|`221` (`]` or `}`)|Key code (held) to apply a modifier to acceleration values for mouse movement and scrolling.
+`slowKey`|`13` (ENTER)|Key code (held) to apply a modifier to acceleration values for mouse movement and scrolling.
 `pauseKey`|`93` (applications i.e. hamburger menu key)|Key code to pause the application.
 `terminateKey`|`-1` (none)|Key code to terminate the application.
 `framesPerSecond`|`90`|Frames per second for the physics engine. Higher results in smoother motion and movement, but decreased performance.
 `mouseResistance`|`10`|"Air resistance" applied to mouse movement.
-`mouseAcceleration`|`100`|Acceleration applied to mouse when moved.
+`mouseAcceleration`|`120`|Acceleration applied to mouse when moved.
 `scrollResistance`|`10`|"Air resistance" applied to scrolling.
-`scrollAcceleration`|`300`|Acceleration applied to scroll wheel when moved.
+`scrollAcceleration`|`400`|Acceleration applied to scroll wheel when moved.
 `slowRatio`|`0.2`|Modifier applied to mouse movement and scrolling accelerations when `slowKey` held.
 
 A `-1` invalidates the key code option. Specify key codes with VK codes: <https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes>. Note that the configuration file takes numbers in decimal—whereas they’re specified in hexidecimal on MSDN.

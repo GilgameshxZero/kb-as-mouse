@@ -21,10 +21,10 @@ namespace KbAsMouse {
 
 		// Settings.
 		int upKey = 80, rightKey = 222, downKey = 186, leftKey = 76,
-				leftClickKey = 165, rightClickKey = 13, middleClickKey = 161,
+				leftClickKey = 165, rightClickKey = 221, middleClickKey = 161,
 				scrollUpKey = 219, scrollDownKey = 79, scrollLeftSingleKey = 190,
 				scrollRightSingleKey = 191,
-				slowKey = 221,	// when held, scale acceleration down
+				slowKey = 13,	 // when held, scale acceleration down
 			pauseKey = 93,
 			terminateKey = -1,
 			// frames per second; higher = smoother actions
@@ -32,7 +32,7 @@ namespace KbAsMouse {
 		// similar to air resistance
 		double mouseResistance = 10,
 					 // pixels per second per second
-			mouseAcceleration = 150, scrollResistance = 10, scrollAcceleration = 300,
+			mouseAcceleration = 120, scrollResistance = 10, scrollAcceleration = 400,
 					 // slows acceleration by this ratio
 			slowRatio = 0.2;
 

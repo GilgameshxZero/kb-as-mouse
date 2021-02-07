@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.2.1
+
+* Swapped default keys for `slowKey` and `rightClickKey`.
+* Changed default mouse acceleration to `120` and default scroll acceleration to `400`.
+
 ## 3.2.0
 
 * Upgrade to new `rain v6.4.8` build.
