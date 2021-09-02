@@ -1,25 +1,8 @@
 #pragma once
 
-#include "kb-hook.hpp"
-#include "state.hpp"
-#include "timer-proc.hpp"
+// Versioning.
+#define KB_AS_MOUSE_VERSION_MAJOR 4
+#define KB_AS_MOUSE_VERSION_MINOR 0
+#define KB_AS_MOUSE_VERSION_REVISION 0
 
-#include <rain.hpp>
-
-#include <Shellapi.h>
-
-int CALLBACK WinMain(_In_ HINSTANCE hInstance,
-	_In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPSTR lpCmdLine,
-	_In_ int nCmdShow);
-
-namespace KbAsMouse {
-	int start(HINSTANCE hInstance,
-		HINSTANCE hPrevInstance,
-		LPSTR lpCmdLine,
-		int nCmdShow);
-	LRESULT CALLBACK mainWndProc(HWND hWnd,
-		UINT uMsg,
-		WPARAM wParam,
-		LPARAM lParam);
-}
+#include "build.hpp"

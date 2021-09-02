@@ -1,66 +1,52 @@
-# kb-as-mouse (KBAM)
+# kb-as-mouse
 
-Perform mouse actions with the keyboard (Windows-only).
+Joystick-like mouse control with the keyboard on Windows.
 
-Option to customize keymapping (movement, scrolling, modifier) and acceleration/resistance behavior.
+## Usage
 
-By default, movement is controlled by the `pl;'` keys, and left click is right ALT. You can pause the program by pressing the applications/hamburger icon key (most keyboards have this), or by left-clicking/right-clicking the tray icon. Other defaults/customization options are described in a later section.
+Mouse movement is controlled with the `pl;'` keys; scrolling is controlled with `o[`. Right ALT simulates left clicks, and `,` simulates right clicks. Holding ENTER will cause all movement to be slower.
 
-Note: numpad keys are usable—however, they’re still a bit buggy when used with SHIFT. I’m looking for a workaraound for this.
+Running kb-as-mouse launches a tray icon. The application can be terminated by right-clicking the icon, and paused/resumed by left-clicking the icon. Pause/resume is also possible with the APPLICATIONS/MENU key (looks like a hamburger icon).
 
-## Why use KBAM instead of [AutoHotkey, Windows Ease of Access, etc.]?
-
-KBAM is built for simplicity—while you could accomplish the same thing with an AHK script, customization of the script is more difficult and requires you to learn the range of the AHK scripting language. Other options, such as Window’s built-in Ease of Access allowing for use of the numpad as a mouse, is limited in scope and has fewer options (acceleration, resistance, customization of keys, etc.).
+Keys and physics customizations can be made via command-line options. Run the application with `--help` to get help on the command-line options available. The FAQ covers how to specify command-line options.
 
 ## FAQ
 
-### KBAM isn’t working in some windows (Task Manager, games, etc.).
+### Can I use this to play games without a mouse?
 
-Task Manager and many games are run in Adminstrator Mode (elevated). If KBAM is not run elevated, it cannot inject events into elevated applications. So, run KBAM with elevated permissions (right click KBAM, and select “Run as administrator”).
+For some games, especially those which use joystick-like mouse controls for camera, yes. For games which require fast reactions and precision, kb-as-mouse may not be a great choice.
 
-## Customization
+This demo is played on keyboard with the default configuration on an XPS 13 9370.
 
-The keys used in KBAM can be configured by adding a `kb-as-mouse.cfg` file in the working directory of `numpad-as-mouse`. `kb-as-mouse.cfg` can contain the following values:
+https://user-images.githubusercontent.com/20709601/131892918-e7f3471b-bcb0-43c6-b39e-33b53a69fde7.mov
 
-Option|Default|Usage
--|-|-
-`upKey`|`80` (`p` key)|Key code to move mouse up.
-`rightKey`|`222` (`'` or `"`)|Key code to move mouse right.
-`downKey`|`186` (`;` or `:`)|Key code to move mouse down.
-`leftKey`|`76` (`l`)|Key code to move mouse left.
-`leftClickKey`|`165` (right ALT)|Key code to left click.
-`rightClickKey`|`221` (`]` or `}`)|Key code to right click.
-`middleClickKey`|`161` (right SHIFT)|Key code to middle click.
-`scrollUpKey`|`219` (`o`)|Key code to scroll up.
-`scrollDownKey`|`79` (`[` or `{`)|Key code to scroll down.
-`scrollLeftSingleKey`|`190` (`.` or `>`)|Key code to scroll left one notch.
-`scrollRightSingleKey`|`191` (`/` or `?`)|Key code to scroll right one notch.
-`slowKey`|`13` (ENTER)|Key code (held) to apply a modifier to acceleration values for mouse movement and scrolling.
-`pauseKey`|`93` (applications i.e. hamburger menu key)|Key code to pause the application.
-`terminateKey`|`-1` (none)|Key code to terminate the application.
-`framesPerSecond`|`90`|Frames per second for the physics engine. Higher results in smoother motion and movement, but decreased performance.
-`mouseResistance`|`10`|"Air resistance" applied to mouse movement.
-`mouseAcceleration`|`120`|Acceleration applied to mouse when moved.
-`scrollResistance`|`10`|"Air resistance" applied to scrolling.
-`scrollAcceleration`|`400`|Acceleration applied to scroll wheel when moved.
-`slowRatio`|`0.2`|Modifier applied to mouse movement and scrolling accelerations when `slowKey` held.
+The keyboard looks like this. Observe the APPLICATIONS/MENU key is accessible via Fn+Right CTRL.
 
-A `-1` invalidates the key code option. Specify key codes with VK codes: <https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes>. Note that the configuration file takes numbers in decimal—whereas they’re specified in hexidecimal on MSDN.
+![](readme.md-assets/2021-09-02-11-38-18.png)
 
-An example `.cfg` might look like the following:
+### How do I specify command-line options?
 
-```cfg
-terminateKey 93
-slowRatio 0.3
-```
+Create a shortcut, and open properties for the shortcut. The command-line options can be appended to the `Target` line.
 
-## Known Issues
+![](readme.md-assets/2021-09-02-11-09-23.png)
 
-* Fix occasional stalling bug when left mouse button is simulated.
-* Check physics/hook engines and make sure they’re up to standard.
-* SHIFT+numpad still doesn’t quite work.
+An example command-line options string might look like this: `--slow-mod 0.3 --fps 240`. Virtual key codes can be found at <https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes>. Specify `--help` to view the available command-line options.
 
-## Build
+### kb-as-mouse isn’t working in some windows (Task Manager, games, etc.).
+
+Task Manager and many games are run in Administrator Mode (elevated privileges). Thus, to inject mouse actions into elevated applications, kb-as-mouse must also be run with elevated privileges.
+
+To do this, right click and select “Run as adminstrator”. Optionally, this can be set as default on a shortcut.
+
+![](readme.md-assets/2021-09-02-11-08-01.png)
+
+### Why use kb-as-mouse instead of [AutoHotkey, Windows Ease of Access, etc.]?
+
+AHK scripts can accomplish the same thing as kb-as-mouse, but customization requires far more additional work and learning the AHK scripting language.
+
+On the other hand, Windows Ease of Access has a nice graphical UI, but the mouse movement is janky and customization is very little.
+
+## Development
 
 You'll want to grab the `rain` submodule with:
 
@@ -69,4 +55,4 @@ git submodule init
 git submodule update
 ```
 
-The project is setup as a Visual Studio project in `build/`.
+kb-as-mouse is set up as a Visual Studio project in `build/`, with the rain dependencies included.

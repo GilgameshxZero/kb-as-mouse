@@ -1,95 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|x64">
-      <Configuration>Debug</Configuration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
-      <Configuration>Release</Configuration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\kb-as-mouse.cpp" />
+    <ClCompile Include="..\..\src\ll-kb-hook-proc.cpp" />
+    <ClCompile Include="..\..\src\main-wnd-proc.cpp" />
+    <ClCompile Include="..\..\src\state.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\build.hpp" />
+    <ClInclude Include="..\..\include\kb-as-mouse.hpp" />
+    <ClInclude Include="..\..\include\ll-kb-hook-proc.hpp" />
+    <ClInclude Include="..\..\include\main-wnd-proc.hpp" />
+    <ClInclude Include="..\..\include\state.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\..\rc\kb-as-mouse.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\rc\cursor-closed.ico" />
+    <Image Include="..\..\rc\cursor-open.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="..\..\rc\kb-as-mouse.manifest" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6c2ba226-9081-4572-bb50-919955633044}</ProjectGuid>
-    <RootNamespace>kbasmouse</RootNamespace>
+    <ProjectGuid>{e183a359-7b7c-49ee-9d63-911763be51c3}</ProjectGuid>
+    <RootNamespace>kb_as_mouse</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)'=='Debug'">
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)'=='debug'">
     <UseDebugLibraries>true</UseDebugLibraries>
   </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)'=='Release'">
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)'=='release'">
     <UseDebugLibraries>false</UseDebugLibraries>
+    <!-- Imports Whole Program Optimization property sheet. -->
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Label="PropertySheets">
     <Import Project="..\..\rain\build\rain.props" />
   </ImportGroup>
+  <!-- All rain projects share the rain.props file, but the include directories and subsystem defines may differ. -->
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)..\rain\include\;$(IncludePath);</IncludePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(SolutionDir)..\include\;$(SolutionDir)..\rain\include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
-    <ClCompile>
-      <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-    </ClCompile>
+    <!-- _CONSOLE should be used for rain projects on the console, but will not be used for rain tests, since some tests are not SUBSYSTEM CONSOLE. -->
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
-    <ClCompile>
-      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
-    <ClCompile>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <Link>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\include\build.hpp" />
-    <ClInclude Include="..\..\include\kb-as-mouse.hpp" />
-    <ClInclude Include="..\..\include\kb-hook.hpp" />
-    <ClInclude Include="..\..\include\state.hpp" />
-    <ClInclude Include="..\..\include\timer-proc.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\kb-as-mouse.cpp" />
-    <ClCompile Include="..\..\src\kb-hook.cpp" />
-    <ClCompile Include="..\..\src\state.cpp" />
-    <ClCompile Include="..\..\src\timer-proc.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\rc\icon.ico" />
-    <ResourceCompile Include="..\..\rc\kb-as-mouse.rc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

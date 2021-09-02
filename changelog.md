@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.0.0
+
+A rewrite of most of kb-as-mouse, primarily focused on eliminating the bug which occasionally turns kb-as-mouse into a zombie process during high CPU loads.
+
+The cause of the bug was due to the low-level keyboard hook being unhooked due to processing time during a call to `SendInput`, which would cause a memory access error. By adding intercepted key events from the low-level keyboard hook into a queue to be processed separately by another thread, the hook is able to return almost immediately, both lowering the possibility it is unhooked by Windows as well as prevent it from crashing kb-as-mouse due to `SendInput` being processed in a separate thread now.
+
+This release also incorporates `rain` “Rosario” and various bugfixes and build procedure updates from there. The physics engine is altered slightly such that constants have slightly more meaning. And finally, the configuration specification has been moved from a file to the command-line options.
+
+The icon for kb-as-mouse has changed, and changes between paused/unpaused states on the tray.
+
 ## 3.2.1
 
 * Swapped default keys for `slowKey` and `rightClickKey`.

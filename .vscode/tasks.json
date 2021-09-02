@@ -1,0 +1,22 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			/* Remove the intermediates directory obj/ and the output directory bin/. */
+			"type": "shell",
+			"label": "clean",
+			"options": { "cwd": "${workspaceFolder}/build" },
+			"presentation": {
+				"clear": true
+			},
+
+			"command": "make",
+			"args": ["clean"],
+
+			"windows": {
+				"command": "RMDIR",
+				"args": ["/Q", "/S", "..\\bin", "..\\obj"]
+			}
+		}
+	]
+}

@@ -5,55 +5,67 @@
 #include <bitset>
 
 namespace KbAsMouse {
+	// Shared state and settings for the application.
 	class State {
 		public:
-		State();
+		unsigned long vkUp = 'P',	 // P
+			vkRight = VK_OEM_7,	 // ' or "
+			vkDown = VK_OEM_1,	// ; or :
+			vkLeft = 'L',	 // L
+			vkMouseLeft = VK_RMENU,	 // Right ALT
+			vkMouseRight = VK_OEM_COMMA,	// ,
+			vkMouseMiddle = VK_OEM_PERIOD,	// .
+			vkScrollUp = VK_OEM_4,	// [ or {
+			vkScrollDown = 'O',	 // O
 
-		// Read configuration settings from a file and overwrite current settings.
-		void overwriteSettingsFromFile(std::string file);
+			// While scroll left/right seem similar to scroll up/down, these are
+			// single keys by default and don't have continuous (held) actions.
+			vkScrollLeft = VK_OEM_6,	// ] or }
+			vkScrollRight = VK_OEM_5,	 // \ or |
 
-		// Returns true if this VK key is part of the settings and should be
-		// intercepted.
-		bool shouldInterceptKey(int vkCode);
+			vkSlow = VK_RETURN,	 // ENTER
+			vkPause = VK_APPS,	// CONTEXT MENU
+			fps;
 
-		// Is SHIFT key pressed—override Windows default numpad settings.
-		bool isShiftDown();
+		// Set to true iff the virtual key is pressed. Only valid for the continuous
+		// keys processed by the physics engine: up, right, down, left, scroll up,
+		// scroll down, slow.
+		std::bitset<256> pressed;
 
-		// Settings.
-		int upKey = 80, rightKey = 222, downKey = 186, leftKey = 76,
-				leftClickKey = 165, rightClickKey = 221, middleClickKey = 161,
-				scrollUpKey = 219, scrollDownKey = 79, scrollLeftSingleKey = 190,
-				scrollRightSingleKey = 191,
-				slowKey = 13,	 // when held, scale acceleration down
-			pauseKey = 93,
-			terminateKey = -1,
-			// frames per second; higher = smoother actions
-			framesPerSecond = 90;
-		// similar to air resistance
-		double mouseResistance = 10,
-					 // pixels per second per second
-			mouseAcceleration = 120, scrollResistance = 10, scrollAcceleration = 400,
-					 // slows acceleration by this ratio
-			slowRatio = 0.2;
+		double mouseDrag = 10, mouseAcc = 4000, scrollDrag = 10, scrollAcc = 200,
+					 slowMod = 0.45;
 
-		// State.
-		// Non-integer portion of mouse movement.
-		std::pair<double, double> mousePositionRemainder = std::make_pair(0, 0),
-															// velocity of mouse, in pixels per second
-			mouseVelocity = std::make_pair(0, 0);
-		// Non-integer portion of scroll movement.
-		double scrollPositionRemainder = 0,
-					 // velocity of mouse wheel, in units per second
-			scrollVelocity = 0;
-		// If the program is paused.
-		bool paused = false, isTimerRunning = false;
-		std::bitset<256> isVKKeyDown;
+		// Notification icon-related data.
+		HICON notifyIconOpen, notifyIconClosed;
+		NOTIFYICONDATA notifyIconData;
 
-		private:
-		void refreshInterceptKeys();
+		// Intercepted keys are stored in a queue to be processed periodically,
+		// protected by a mutex.
+		class KeyEvent {
+			public:
+			bool isDown;
+			unsigned long vkCode;
+		};
+		std::queue<KeyEvent> keyEvents;
+		std::mutex keyEventsMtx;
+		std::condition_variable keyEventsEv;
 
-		std::set<int> keysToIntercept;
+		// The physics handler does not access shared memory outside of keys, and
+		// thus does not use a mutex for the condition variable. The condition
+		// variable is used only for waking the physics handler from sleep.
+		std::condition_variable physicsEv;
+		std::atomic_bool physicsSleeping = true;
+
+		// paused only affects the intercepting of keys; terminating affects both
+		// the key handler and the physics handler.
+		std::atomic_bool terminating = false, paused = false;
+
+		void togglePause();
+
+		// Based on pause state, sets the notify icon tip and icon.
+		void updateNotifyIconData();
 	};
 
+	// State must be stored globally to allow access from low level hook proc.
 	extern State state;
 }
