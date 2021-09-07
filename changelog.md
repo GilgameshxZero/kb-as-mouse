@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.1
+
+Remove DPI scaling since it seems to already be handled by `SendInput`. Adjust default physics to accomodate. Increase default FPS to VSync * 1.5 because of unknown blips in frame time when setting it to exactly VSync.
+
 ## 4.0.0
 
 A rewrite of most of kb-as-mouse, primarily focused on eliminating the bug which occasionally turns kb-as-mouse into a zombie process during high CPU loads.

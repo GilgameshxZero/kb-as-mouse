@@ -24,15 +24,15 @@ namespace KbAsMouse {
 			vkScrollRight = VK_OEM_5,	 // \ or |
 
 			vkSlow = VK_RETURN,	 // ENTER
-			vkPause = VK_APPS,	// CONTEXT MENU
-			fps;
+			vkPause = VK_APPS;	// CONTEXT MENU
+		double fps;
 
 		// Set to true iff the virtual key is pressed. Only valid for the continuous
 		// keys processed by the physics engine: up, right, down, left, scroll up,
 		// scroll down, slow.
 		std::bitset<256> pressed;
 
-		double mouseDrag = 10, mouseAcc = 4000, scrollDrag = 10, scrollAcc = 200,
+		double mouseDrag = 12, mouseAcc = 7000, scrollDrag = 12, scrollAcc = 200,
 					 slowMod = 0.45;
 
 		// Notification icon-related data.
@@ -58,7 +58,7 @@ namespace KbAsMouse {
 
 		// paused only affects the intercepting of keys; terminating affects both
 		// the key handler and the physics handler.
-		std::atomic_bool terminating = false, paused = false;
+		std::atomic_bool terminating = false, paused;
 
 		void togglePause();
 

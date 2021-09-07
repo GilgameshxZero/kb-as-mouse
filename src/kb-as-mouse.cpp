@@ -39,11 +39,17 @@ int CALLBACK WinMain(
 	parser.addParser("scroll-acc", state.scrollAcc);
 	parser.addParser("slow-mod", state.slowMod);
 
+	// Use a local paused first since the one in state is atomic.
+	bool paused = false;
+	parser.addParser("paused", paused);
+
 	// Default FPS is set to that of the current display.
 	DEVMODE displayEnv{};
 	Rain::Windows::validateSystemCall(
 		EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &displayEnv));
-	state.fps = displayEnv.dmDisplayFrequency;
+	// TODO: Settings this to VSync leads to blips in condition variable wait
+	// which cause perceptable periodic lags, which are annoying. Why?
+	state.fps = displayEnv.dmDisplayFrequency * 1.5;
 
 	try {
 		parser.parse(__argc - 1, __argv + 1);
@@ -55,6 +61,7 @@ int CALLBACK WinMain(
 			MB_OK);
 		return -1;
 	}
+	state.paused = paused;
 
 	if (showHelp) {
 		MessageBox(
@@ -95,7 +102,9 @@ int CALLBACK WinMain(
 			"--slow-mod (0.2): Slowness modifier applied to acceleration when slow "
 			"key is held; scrolling is reduced to single scrolls instead of having "
 			"the modifier applied. A modifier of x will also apply a modifier of 1/x "
-			"to the corresponding drag. \n",
+			"to the corresponding drag.\n"
+			"\n"
+			"--paused (false): Optionally pause the program on start.",
 			"kb-as-mouse",
 			MB_OK);
 		return 0;

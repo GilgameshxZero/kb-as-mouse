@@ -195,12 +195,6 @@ namespace KbAsMouse {
 				1000000000ns / state.fps);
 		auto prevTimestep = std::chrono::steady_clock::time_point::min();
 
-		// Waiting on a condition variable causes some lag while waking up. The
-		// previous wake-up lag is stored so that we can account for this before
-		// entering wait. We assume that this doesn't change much over nearby
-		// timesteps.
-		std::chrono::steady_clock::duration waitLag = 0ns;
-
 		// Used internally for the condition variable, since others don't need
 		// access.
 		std::mutex physicsEvMtx;
@@ -213,9 +207,6 @@ namespace KbAsMouse {
 		// events.
 		std::pair<double, double> mousePosRem{0, 0};
 		double scrollPosRem = 0;
-
-		// Positions are scaled by this based on DPI before being passed as INPUT.
-		double dpiMod;
 
 		// Physics engine sleeps if all velocities are under this.
 		double const minVel = 1;
@@ -238,16 +229,10 @@ namespace KbAsMouse {
 				// If previously sleeping, adjust the timestepDelta to default.
 				timestepDelta = internalWait;
 				prevTimestep = std::chrono::steady_clock::now();
-
-				// Re-retrieve the system DPI when waking from sleep, so that latest
-				// changes are taken into account.
-				dpiMod =
-					static_cast<double>(GetDpiForSystem()) / USER_DEFAULT_SCREEN_DPI;
 			} else {
-				state.physicsEv.wait_until(lck, prevTimestep + internalWait - waitLag);
+				state.physicsEv.wait_until(lck, prevTimestep + internalWait);
 				timeNow = std::chrono::steady_clock::now();
 				timestepDelta = timeNow - prevTimestep;
-				waitLag = timestepDelta - internalWait + waitLag;
 				prevTimestep = timeNow;
 			}
 			if (state.terminating) {
@@ -287,8 +272,9 @@ namespace KbAsMouse {
 				 (state.pressed[state.vkScrollDown] && !state.pressed[state.vkSlow]) *
 					 state.scrollAcc * WHEEL_DELTA * slowMod) *
 				timestepMod;
-			mousePosRem.first += mouseVel.first * timestepMod * dpiMod;
-			mousePosRem.second += mouseVel.second * timestepMod * dpiMod;
+			// Does not need to be scaled by DPI, since SendInput already does that for us.
+			mousePosRem.first += mouseVel.first * timestepMod;
+			mousePosRem.second += mouseVel.second * timestepMod;
 			scrollPosRem += scrollVel * timestepMod;
 
 			// Send and remove integral position portions as events.
